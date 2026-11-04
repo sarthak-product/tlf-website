@@ -12,8 +12,8 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 | # | Feature | Phase | Status |
 |---|---------|-------|--------|
 | 1 | Stack and architecture | Slice 1 | in-progress |
-| 2 | Coding standards and tooling | Slice 1 | planned |
-| 3 | Design system and base layout | Slice 1 | planned |
+| 2 | Coding standards and tooling | Slice 1 | in-progress |
+| 3 | Design system and base layout | Slice 1 | in-progress |
 | 4 | Home page on the locked copy | Slice 2 | planned |
 | 5 | Demo build for the CA | Slice 3 | planned |
 | 6 | Book a call route | Slice 4 | planned |
@@ -47,11 +47,12 @@ spec [0001](../specs/0001-stack-and-architecture/index.md) · code in apps/web
 Capture conventions from the real scaffold into `AGENTS.md` (keeping every current rule, adding real commands), then install lint, format and pre commit checks, with `scripts/check-copy.mjs` wired in so dashes fail the commit.
 **Done when:** `AGENTS.md` lists the real commands, and lint, format and the copy check run clean on commit.
 - [ ] Capture conventions and tooling choices: `/audit`
-- [ ] Install the tooling: `/develop tooling`
+- [x] Install the tooling: `/develop tooling`
 - [ ] Check it runs clean: `/test`
 
 ### 3. Design system and base layout · needs a decision · Facade
 Turn `design/tokens.json` into CSS variables for light and dark (light ships first), build the base layout, navigation and footer shell with stand in labels, and the lockup as type (mark plus name in Quicksand 600). Base components follow `design/components`: Button, Alert, Badge, TextField. The spec settles how theme switching works, how fonts load without blocking, and the mobile layouts, which were never drawn. (basis: Home comes first and every page depends on this)
+code in apps/web (tokens, fonts, lockup and header built ahead of the spec; the spec is still owed)
 **Done when:** both themes render from one set of token variables, every interactive element shows default, hover, focus and disabled states, contrast passes 4.5:1 for text and 3:1 for borders in both themes, the mark is checked at 32px wide, and reduced motion is honored.
 - [ ] Design it (spec): `/architect design system and base layout`
 

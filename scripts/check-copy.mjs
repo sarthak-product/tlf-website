@@ -2,16 +2,32 @@
 // Fails if source text contains an em dash or en dash.
 // Project rule: no em dashes or en dashes in copy, comments or docs.
 // Usage: node scripts/check-copy.mjs [folder ...]   (default: current folder)
-import { readdirSync, readFileSync, statSync } from 'node:fs';
-import { join, extname } from 'node:path';
+import { readdirSync, readFileSync, statSync } from "node:fs";
+import { extname, join } from "node:path";
 
 const EM = String.fromCharCode(0x2014);
 const EN = String.fromCharCode(0x2013);
-const SKIP = new Set(['node_modules', '.git', '.next', 'dist', 'build', 'coverage', '.claude']);
-const EXT = new Set(['.md', '.mdx', '.ts', '.tsx', '.js', '.jsx', '.mjs', '.cjs', '.json', '.css', '.html', '.sql', '.txt', '.yml', '.yaml']);
+const SKIP = new Set(["node_modules", ".git", ".next", "dist", "build", "coverage", ".claude"]);
+const EXT = new Set([
+  ".md",
+  ".mdx",
+  ".ts",
+  ".tsx",
+  ".js",
+  ".jsx",
+  ".mjs",
+  ".cjs",
+  ".json",
+  ".css",
+  ".html",
+  ".sql",
+  ".txt",
+  ".yml",
+  ".yaml",
+]);
 
 const roots = process.argv.slice(2);
-if (roots.length === 0) roots.push('.');
+if (roots.length === 0) roots.push(".");
 
 let bad = 0;
 
@@ -26,7 +42,7 @@ function walk(dir) {
 }
 
 function scan(file) {
-  const lines = readFileSync(file, 'utf8').split('\n');
+  const lines = readFileSync(file, "utf8").split("\n");
   lines.forEach((line, i) => {
     if (line.includes(EM) || line.includes(EN)) {
       bad++;
@@ -38,7 +54,9 @@ function scan(file) {
 for (const r of roots) walk(r);
 
 if (bad > 0) {
-  console.error(`\n${bad} line(s) with an em or en dash. Replace with a comma, colon or full stop, or write ranges in words.`);
+  console.error(
+    `\n${bad} line(s) with an em or en dash. Replace with a comma, colon or full stop, or write ranges in words.`,
+  );
   process.exit(1);
 }
-console.log('check-copy: no em or en dashes found');
+console.log("check-copy: no em or en dashes found");

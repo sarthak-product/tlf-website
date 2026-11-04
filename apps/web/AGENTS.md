@@ -2,16 +2,20 @@
 
 ## Overview
 
-The public site: a Next.js App Router app in strict TypeScript that renders every public page as full HTML, so search and AI engines read it without running JavaScript. Today it is the Slice 1 skeleton: a root layout and an empty content folder, no pages yet. The Express API, Postgres and `packages/shared` arrive in Slice 5.
+The public site: a Next.js App Router app in strict TypeScript that renders every public page as full HTML, so search and AI engines read it without running JavaScript. Today it is the Slice 1 skeleton: a root layout with the header and lockup, the design tokens and base styles, and an empty content folder. There are no pages yet. The Express API, Postgres and `packages/shared` arrive in Slice 5.
 
 ## Key files
 
 | File | Owns |
 |---|---|
 | `package.json` | Scripts and pinned dependencies (Next.js 16.4.5, React 19.3.1) |
-| `next.config.ts` | Next.js config. Only `reactStrictMode: true` so far |
-| `tsconfig.json` | Extends `../../tsconfig.base.json`, adds DOM libs and the `@/*` alias to `src/*` |
-| `src/app/layout.tsx` | Root layout: `<html lang="en">` and `<body>` |
+| `next.config.ts` | Next.js config: `reactStrictMode: true` and `agentRules: false` (stops `next dev` writing a managed block into this file) |
+| `tsconfig.json` | Extends `../../tsconfig.base.json`, adds DOM libs, the `@/*` alias to `src/*` and `@design/*` to `../../design/*` |
+| `src/app/layout.tsx` | Root layout: `<html lang="en">`, font variables, the header and `<main>` |
+| `src/styles/tokens.css` | Generated from `design/tokens.json`. Never edit by hand, run `pnpm tokens` |
+| `src/styles/base.css` | Reset, element defaults, focus ring and the `.page` frame |
+| `src/lib/fonts.ts` | Arimo and Quicksand through `next/font/google` |
+| `src/components/` | Components with CSS Modules beside them: `lockup`, `site-header` |
 | `src/content/` | Typed content modules, one file per page. Empty today |
 
 ## Commands
@@ -23,6 +27,8 @@ pnpm --filter web dev
 pnpm --filter web build
 pnpm --filter web typecheck
 ```
+
+Checks run from the repo root: `pnpm check` runs Biome (lint, format and import order), the typecheck, the token and contrast checks and the copy check. `pnpm format` fixes formatting. Biome is the only linter and formatter.
 
 ## Conventions
 
@@ -36,9 +42,10 @@ pnpm --filter web typecheck
 
 ## Gotchas
 
-- When `next dev` detects an AI agent, it adds a managed block to the end of this file, fenced by two HTML comment markers whose names start with `nextjs-agent-rules`. It leaves the rest of the file alone and writes the block again if it is removed. The block contains em dashes, so `node scripts/check-copy.mjs` fails while it is present. Do not commit the block.
-- Never type those two marker strings into this file, not even in a sentence. Next.js finds them as plain text and replaces everything between the first start marker and the first end marker, which would eat your own words.
-- The permanent fix is Sarthak's call: set `agentRules: false` in `next.config.ts`, or teach the check to skip the block. Until then, delete the block before running the check.
+- `agentRules: false` is set in `next.config.ts`, so `next dev` no longer adds a managed block to this file. If that setting is ever removed, the block comes back, contains em dashes and fails `node scripts/check-copy.mjs`. Do not commit the block.
+- Never type the managed block's two comment marker strings into this file, not even in a sentence. Next.js finds them as plain text and replaces everything between them.
+- `next build` fetches the Arimo and Quicksand files from Google Fonts, so a build needs network access. The files are then served from our own domain.
+- `@design/*` maps to the repo's `design/` folder (see `tsconfig.json`). The mark SVGs are imported from there, so there is no second copy.
 - pnpm prints an engine warning on Node below 26. Next.js itself needs only Node 20.9 or later, so the warning does not stop the build.
 
 ## Related specs

@@ -1,0 +1,59 @@
+/*
+ * Lockup proportions come from design/README.md, Mark:
+ *   mark height is about 1.2 times the cap height of the name
+ *   gap is one quarter of the mark height
+ *   clear space is one quarter of the mark height on every side
+ * Everything is in em, so the lockup scales from one font size.
+ * Quicksand cap height is 0.7em, so the mark is 0.84em high and 1.59em wide.
+ */
+.lockup {
+  --mark-height: 0.84em;
+  --lockup-clear: calc(var(--mark-height) / 4);
+
+  display: inline-flex;
+  align-items: center;
+  gap: var(--lockup-clear);
+  font-family: var(--type-wordmark-family);
+  font-size: var(--lockup-size, 24px);
+  font-weight: var(--type-wordmark-weight);
+  letter-spacing: var(--type-wordmark-tracking);
+  line-height: 1;
+  color: var(--color-text);
+  text-decoration: none;
+  white-space: nowrap;
+  border-radius: var(--radius-md);
+  padding: var(--space-2);
+  /* The padding is hover room. Pull it back so the mark meets the page edge. */
+  margin: calc(-1 * var(--space-2));
+  transition: background-color var(--duration-fast) var(--easing-standard);
+}
+
+.lockup:hover {
+  background-color: var(--color-surface-tint);
+  color: var(--color-text);
+}
+
+.markOnLight,
+.markOnDark {
+  height: var(--mark-height);
+  width: auto;
+  flex: none;
+  /* Centre the mark on the cap height of the name. Measured at 200px: caps sit 0.055em lower than the line box centre. */
+  transform: translateY(0.055em);
+}
+
+.markOnDark {
+  display: none;
+}
+
+:root[data-theme="dark"] .markOnLight {
+  display: none;
+}
+
+:root[data-theme="dark"] .markOnDark {
+  display: block;
+}
+
+.name {
+  display: block;
+}

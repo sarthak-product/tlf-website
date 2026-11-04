@@ -11,6 +11,13 @@
     "dev": "pnpm --filter web dev",
     "build": "pnpm --filter web build",
     "start": "pnpm --filter web start",
-    "typecheck": "pnpm -r typecheck"
+    "typecheck": "pnpm -r typecheck",
+    "lint": "biome lint .",
+    "format": "biome format --write .",
+    "tokens": "node scripts/build-tokens.mjs",
+    "check": "biome check . && pnpm typecheck && node scripts/build-tokens.mjs --check && node scripts/check-contrast.mjs && node scripts/check-copy.mjs"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.6.5"
   }
 }
