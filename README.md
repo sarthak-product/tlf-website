@@ -1,6 +1,6 @@
 # Lotus Feet site: handover package
 
-Source code for the Lotus Feet Consultancy corporate website. This package holds the context, design system and start prompts to build it with Claude Code and the jsmastery-pro workflow skills. It holds no application code yet.
+Source code for the Lotus Feet Consultancy corporate website. This package holds the context, design system and start prompts to build it with Claude Code and the jsmastery-pro workflow skills. The app scaffold is in place (Next.js only, no pages yet).
 
 ## What is in it
 | Path | Purpose |
@@ -12,6 +12,9 @@ Source code for the Lotus Feet Consultancy corporate website. This package holds
 | `docs/context/` | Brief, decisions, compliance, locked Home copy, SEO/AEO/GEO, data and DPDP, open items |
 | `scripts/check-copy.mjs` | Fails on em and en dashes |
 | `START-PROMPT.md` | The prompts to paste, in order |
+| `apps/web/` | The Next.js app (App Router, TypeScript). Express, Postgres and `packages/shared` arrive in Slice 5 |
+| `package.json`, `pnpm-workspace.yaml`, `tsconfig.base.json` | Workspace and shared TypeScript settings |
+| `.env.example` | Names of the config values, with no values |
 
 ## Set up (Sarthak does these steps; GitHub is not connected to the Claude session)
 1. On GitHub, create a **private** repo `lotus-feet-site`. Description: `Source code for the Lotus Feet Consultancy corporate website.` Add no README, licence or .gitignore.
@@ -29,6 +32,34 @@ Source code for the Lotus Feet Consultancy corporate website. This package holds
    The skills repo's own docs show the owner name JavaScript-Mastery-Pro in places. If the command above fails, try that spelling.
 5. Commit the installed `.claude/skills` folder so it stays versioned.
 6. Open Claude Code in the repo and paste the prompts from `START-PROMPT.md`, one per session.
+
+## Run it
+You need Node.js 26 (the current LTS line, see `.nvmrc`) and pnpm 10.
+
+```bash
+pnpm install
+```
+
+```bash
+pnpm dev
+```
+
+```bash
+pnpm typecheck
+```
+
+```bash
+pnpm build
+```
+
+```bash
+pnpm start
+```
+
+- `pnpm dev` starts the site at http://localhost:3000. There are no pages yet, so every address shows the Next.js 404 page.
+- `pnpm start` serves the output of `pnpm build`.
+- `.env.example` lists the config names. Copy it to `.env` and fill in values when a feature needs them. Nothing reads it yet.
+- Express and Postgres are not installed until Slice 5.
 
 ## Check before you rely on it
 - `node scripts/check-copy.mjs` should print "no em or en dashes found".

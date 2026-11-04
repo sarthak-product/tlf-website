@@ -36,10 +36,10 @@ Style: Facade (UI first, no database). Tier: Beta. Enough ground to render the H
 
 ### 1. Stack and architecture
 Record the decided PENN stack as a spec and scaffold only the runnable Next.js skeleton Home needs. The spec also settles repo layout, how Next.js will talk to the Express API later, and where typed content modules live. (basis: foundations before features; stack decided in `01-decisions.md`)
-spec [0001](../specs/0001-stack-and-architecture/index.md)
+spec [0001](../specs/0001-stack-and-architecture/index.md) · code in apps/web
 **Done when:** the stack is recorded as Proposed in `docs/specs/`, nothing decided in `01-decisions.md` is reopened, and the scaffold boots locally and passes a build.
 - [x] Decide the stack (spec): `/architect stack and architecture`
-- [ ] Scaffold from the decision: `/develop stack and architecture`
+- [x] Scaffold from the decision: `/develop stack and architecture`
 - [ ] Verify it: `/check verify stack and architecture`
 - [ ] Test it: `/test stack and architecture`
 
