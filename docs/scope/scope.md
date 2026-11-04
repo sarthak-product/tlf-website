@@ -14,7 +14,7 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 | 1 | Stack and architecture | Slice 1 | in-progress |
 | 2 | Coding standards and tooling | Slice 1 | in-progress |
 | 3 | Design system and base layout | Slice 1 | in-progress |
-| 4 | Home page on the locked copy | Slice 2 | planned |
+| 4 | Home page on the locked copy | Slice 2 | in-progress |
 | 5 | Demo build for the CA | Slice 3 | planned |
 | 6 | Book a call route | Slice 4 | planned |
 | 7 | Data model | Slice 5 | planned |
@@ -61,6 +61,7 @@ Style: Facade. Tier: Beta. A real, polished page on typed content modules, no da
 
 ### 4. Home page on the locked copy · needs a decision · Facade
 Build all thirteen sections in the order set in `docs/context/03-home-copy.md`, using the copy verbatim. Hero headline, supporting line and firm statement each live in one content file with all shortlisted options, so a choice is a one line change; the demo shows option 1 of each. Sections with no real content (clients, case studies, key figures, testimonials, people) render nothing until content exists, heading included. "How an engagement runs" is a hidden slot until copy exists, and Recent writing stays hidden until a post is published. Desktop and mobile both built.
+code in apps/web (built from the `/develop` brief, no spec yet; the spec is still owed)
 **Done when:** the page matches the locked copy word for word, hidden sections leave no heading or gap, the six questions each end with Book a call, no invented client, figure, person or image appears, and `node scripts/check-copy.mjs` passes.
 - [ ] Design it (spec): `/architect home page`
 

@@ -1,0 +1,47 @@
+/*
+ * The line and its stops. The line is a hairline on the left edge of every section,
+ * so consecutive sections join into one line. Each section adds one square stop.
+ * Hidden sections render nothing, so the line closes up with no gap.
+ */
+.section {
+  --stop-pad: var(--space-8);
+  --stop-indent: var(--space-5);
+  --stop-first-line: var(--type-h2-line);
+}
+
+@media (min-width: 48rem) {
+  .section {
+    --stop-pad: var(--space-9);
+    --stop-indent: var(--space-7);
+  }
+}
+
+.stop {
+  position: relative;
+  padding-block: var(--stop-pad);
+  padding-inline-start: var(--stop-indent);
+}
+
+.stop::before {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 1px;
+  background-color: var(--color-border-strong);
+}
+
+.stop::after {
+  content: "";
+  position: absolute;
+  inset-block-start: calc(var(--stop-pad) + var(--stop-first-line) / 2 - var(--space-2) / 2);
+  inset-inline-start: calc(-1 * var(--space-2) / 2 + 0.5px);
+  width: var(--space-2);
+  height: var(--space-2);
+  background-color: var(--color-accent);
+  border-radius: var(--radius-sm);
+}
+
+.heading {
+  margin-block-end: var(--space-6);
+}

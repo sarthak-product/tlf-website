@@ -1,0 +1,75 @@
+.item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 44px;
+  padding: var(--space-3) var(--space-3);
+  margin-inline: calc(-1 * var(--space-3));
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  list-style: none;
+  transition: background-color var(--duration-fast) var(--easing-standard);
+}
+
+.summary::-webkit-details-marker {
+  display: none;
+}
+
+.summary:hover {
+  background-color: var(--color-surface-tint);
+}
+
+.question {
+  flex: 1;
+  font-size: var(--type-h3-size);
+  line-height: var(--type-h3-line);
+}
+
+/* Plus when closed, minus when open. Two 1.5px strokes in currentColor, no icon library. */
+.icon {
+  position: relative;
+  flex: none;
+  width: var(--space-4);
+  height: var(--space-4);
+  color: var(--color-accent);
+}
+
+.icon::before,
+.icon::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 50%;
+  height: 1.5px;
+  margin-top: -0.75px;
+  background-color: currentColor;
+  border-radius: var(--radius-sm);
+}
+
+.icon::after {
+  transform: rotate(90deg);
+  transition: transform var(--duration-fast) var(--easing-standard);
+}
+
+.item[open] .icon::after {
+  transform: rotate(0deg);
+}
+
+.answer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-5);
+  padding-block: var(--space-2) var(--space-5);
+  max-width: 44rem;
+}
+
+.text {
+  font-size: var(--type-body-lg-size);
+  line-height: var(--type-body-lg-line);
+}

@@ -46,6 +46,17 @@
   display: none;
 }
 
+/* Dark follows the system setting. data-theme forces a theme when something sets it. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .markOnLight {
+    display: none;
+  }
+
+  :root:not([data-theme="light"]) .markOnDark {
+    display: block;
+  }
+}
+
 :root[data-theme="dark"] .markOnLight {
   display: none;
 }

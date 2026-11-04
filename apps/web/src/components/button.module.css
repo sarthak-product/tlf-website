@@ -1,0 +1,64 @@
+/* Rebuilt from design/components/Button. Values come from tokens only. */
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-md);
+  font-family: var(--type-button-family);
+  font-size: var(--type-button-size);
+  font-weight: var(--type-button-weight);
+  line-height: var(--type-button-line);
+  letter-spacing: var(--type-button-tracking);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--duration-fast) var(--easing-standard),
+    color var(--duration-fast) var(--easing-standard);
+}
+
+.primary {
+  background-color: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.primary:hover {
+  background-color: var(--color-accent-hover);
+  color: var(--color-on-accent);
+}
+
+.secondary {
+  background-color: var(--color-surface);
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+
+.secondary:hover {
+  background-color: var(--color-surface-tint);
+  color: var(--color-text);
+}
+
+.text {
+  padding: 0 var(--space-2);
+  background-color: transparent;
+  color: var(--color-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.text:hover {
+  color: var(--color-accent-hover);
+}
+
+/* Focus is the global 2px ring in base.css, on every variant. */
+
+.button:disabled {
+  background-color: var(--color-surface-tint);
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  cursor: not-allowed;
+}

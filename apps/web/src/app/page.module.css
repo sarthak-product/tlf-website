@@ -1,0 +1,156 @@
+/* Home page layout. Values come from tokens only. */
+
+/* Hero */
+.eyebrow {
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  line-height: var(--type-label-line);
+  letter-spacing: var(--type-label-tracking);
+  color: var(--color-text-muted);
+}
+
+.headline {
+  max-width: 18em;
+  margin-block-start: var(--space-4);
+}
+
+.lead {
+  max-width: 36rem;
+  margin-block-start: var(--space-5);
+  font-size: var(--type-body-lg-size);
+  line-height: var(--type-body-lg-line);
+}
+
+.action {
+  margin-block-start: var(--space-6);
+}
+
+@media (min-width: 48rem) {
+  .headline {
+    font-size: var(--type-display-size);
+    line-height: var(--type-display-line);
+    letter-spacing: var(--type-display-tracking);
+  }
+
+  .lead {
+    margin-block-start: var(--space-6);
+  }
+
+  .action {
+    margin-block-start: var(--space-7);
+  }
+}
+
+/* The firm statement, and the people line when it shows */
+.statement {
+  max-width: 32em;
+  font-size: var(--type-h2-size);
+  font-weight: 400;
+  line-height: var(--type-h2-line);
+  letter-spacing: var(--type-h2-tracking);
+}
+
+.peopleLink {
+  margin-block-start: var(--space-5);
+}
+
+/* Logos, when clients have agreed */
+.logos {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-6) var(--space-7);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.logo {
+  height: var(--space-7);
+  width: auto;
+}
+
+/* Rows: services, principles, engagement steps. Hairlines and space, no cards. */
+.rows {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--color-border);
+}
+
+.row {
+  display: grid;
+  gap: var(--space-2);
+  padding-block: var(--space-5);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.rowTitle {
+  font-size: var(--type-h3-size);
+  line-height: var(--type-h3-line);
+}
+
+.rowTitle a {
+  color: var(--color-text);
+}
+
+.rowText {
+  max-width: 40rem;
+  color: var(--color-text);
+}
+
+@media (min-width: 64rem) {
+  .row {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    gap: var(--space-6);
+    padding-block: var(--space-6);
+  }
+
+  .numbered .row {
+    grid-template-columns: var(--space-7) minmax(0, 5fr) minmax(0, 6fr);
+  }
+}
+
+/* Numbers for ordered rows. Decorative, the list is already ordered. */
+.numbered {
+  counter-reset: row;
+}
+
+.numbered .row {
+  counter-increment: row;
+}
+
+.numbered .row::before {
+  content: counter(row);
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  line-height: var(--type-h3-line);
+  color: var(--color-text-muted);
+}
+
+@media (max-width: 63.99rem) {
+  .numbered .row {
+    gap: var(--space-1);
+  }
+}
+
+/* Questions */
+.faq {
+  border-top: 1px solid var(--color-border);
+}
+
+/* Closing */
+.closing {
+  max-width: 20em;
+  font-size: var(--type-h1-size);
+  line-height: var(--type-h1-line);
+  letter-spacing: var(--type-h1-tracking);
+}
+
+@media (min-width: 48rem) {
+  .closing {
+    font-size: var(--type-display-size);
+    line-height: var(--type-display-line);
+    letter-spacing: var(--type-display-tracking);
+  }
+}
