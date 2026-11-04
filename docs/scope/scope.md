@@ -14,7 +14,7 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 | 1 | Stack and architecture | Slice 1 | in-progress |
 | 2 | Coding standards and tooling | Slice 1 | in-progress |
 | 3 | Design system and base layout | Slice 1 | in-progress |
-| 4 | Home page on the locked copy | Slice 2 | in-progress |
+| 4 | Home page on the locked copy | Slice 2 | done |
 | 5 | Demo build for the CA | Slice 3 | planned |
 | 6 | Book a call route | Slice 4 | planned |
 | 7 | Data model | Slice 5 | planned |

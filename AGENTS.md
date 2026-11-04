@@ -22,14 +22,15 @@ Exact numbers come from the scaffold manifests. Spec 0001 fixes the choices and 
 - pnpm 10.28.0 (`packageManager` in `package.json`). No other build orchestrator.
 - Next.js 16.4.5 (App Router), React and React DOM 19.3.1. All three are exact pins.
 - TypeScript ^7.0.2 in strict mode (`tsconfig.base.json`, with `noUncheckedIndexedAccess`). Also `@types/node` ^26.6.6, `@types/react` and `@types/react-dom` ^19.3.0. `pnpm-lock.yaml` fixes the resolved versions.
+- Tooling (scope feature 2): Biome 2.6.5 (exact pin, root `devDependencies`, config in `biome.json`) is the only linter and formatter. Vitest ^5.1.0 (in `apps/web`) is the only test runner. `test-preferences.json` records the test setup.
 - Decided by spec 0001 but not installed yet: PostgreSQL 16 or later, Express, Zod, `pg`, `node-pg-migrate`, `express-session` with `connect-pg-simple`, argon2id, `pino`, Caddy, systemd. Check package names and versions when each is first added.
 
 ## Repo layout
-One repo, pnpm workspaces (spec 0001). Only the first four lines exist today.
+One repo, pnpm workspaces (spec 0001). Only the first three lines exist today.
 ```
-apps/web/          Next.js app (Slice 1). Typed page copy in src/content/
-package.json  pnpm-workspace.yaml  tsconfig.base.json  .env.example
-design/  docs/  scripts/
+apps/web/          Next.js app (Slices 1 and 2). Typed page copy in src/content/
+package.json  pnpm-workspace.yaml  tsconfig.base.json  biome.json  .env.example
+design/  docs/  scripts/           scripts/ holds the token generator and the contrast and copy checks
 apps/api/          Express service (Slice 5)
 packages/shared/   Zod schemas and types both apps import (Slice 5)
 db/                migrations/ and bootstrap/ SQL (Slice 5)
@@ -46,10 +47,16 @@ pnpm dev                      # next dev for apps/web, http://localhost:3000
 pnpm build                    # next build for apps/web
 pnpm start                    # serve the build output, run pnpm build first
 pnpm typecheck                # tsc --noEmit in every workspace
+pnpm test                     # Vitest in every workspace (vitest run)
+pnpm lint                     # biome lint
+pnpm format                   # biome format --write
+pnpm tokens                   # regenerate apps/web/src/styles/tokens.css from design/tokens.json
+pnpm check                    # the full gate: biome check, typecheck, tokens --check, contrast, copy, tests
+node scripts/check-contrast.mjs  # WCAG contrast of the colour pairs in design/tokens.json, both themes
 node scripts/check-copy.mjs   # fails on em or en dashes, takes optional folders
 pnpm --filter web <script>    # run one script in one workspace
 ```
-No test runner, linter or CI exists yet (scope feature 2). Do not invent one.
+Run `pnpm check` before you commit. `tokens.css` is generated, so edit `design/tokens.json` and run `pnpm tokens`. A new colour pair in use needs a line in `scripts/check-contrast.mjs`. No CI and no pre commit hook exist yet (scope feature 2). Do not invent one.
 
 ## Source of truth, in this order
 1. `docs/specs/` (written by `/architect`) for any decision once it exists.
