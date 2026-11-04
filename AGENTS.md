@@ -16,8 +16,40 @@ Source code for the Lotus Feet Consultancy corporate website (LF). Seed context 
 - Hosting: a small India-region VPS that Sarthak sets up. Provider and budget are not chosen. Do not tie code to one provider.
 - Details and reasons: `docs/context/01-decisions.md`.
 
+## Pinned versions
+Exact numbers come from the scaffold manifests. Spec 0001 fixes the choices and leaves the numbers to scaffold time.
+- Node.js 26: `.nvmrc` is `26`, root `engines` is `>=26.0.0`. pnpm warns on older Node.
+- pnpm 10.28.0 (`packageManager` in `package.json`). No other build orchestrator.
+- Next.js 16.4.5 (App Router), React and React DOM 19.3.1. All three are exact pins.
+- TypeScript ^7.0.2 in strict mode (`tsconfig.base.json`, with `noUncheckedIndexedAccess`). Also `@types/node` ^26.6.6, `@types/react` and `@types/react-dom` ^19.3.0. `pnpm-lock.yaml` fixes the resolved versions.
+- Decided by spec 0001 but not installed yet: PostgreSQL 16 or later, Express, Zod, `pg`, `node-pg-migrate`, `express-session` with `connect-pg-simple`, argon2id, `pino`, Caddy, systemd. Check package names and versions when each is first added.
+
+## Repo layout
+One repo, pnpm workspaces (spec 0001). Only the first four lines exist today.
+```
+apps/web/          Next.js app (Slice 1). Typed page copy in src/content/
+package.json  pnpm-workspace.yaml  tsconfig.base.json  .env.example
+design/  docs/  scripts/
+apps/api/          Express service (Slice 5)
+packages/shared/   Zod schemas and types both apps import (Slice 5)
+db/                migrations/ and bootstrap/ SQL (Slice 5)
+ops/               systemd/, caddy/, backup/ (Slices 5 and 8)
+compose.yaml       optional local Postgres (Slice 5)
+```
+- `apps/web` and `apps/api` never import from each other. Both import only from `packages/shared`.
+
 ## Commands
-Not yet defined. `/audit` fills this section after the scaffold exists.
+Run from the repo root.
+```bash
+pnpm install                  # install every workspace
+pnpm dev                      # next dev for apps/web, http://localhost:3000
+pnpm build                    # next build for apps/web
+pnpm start                    # serve the build output, run pnpm build first
+pnpm typecheck                # tsc --noEmit in every workspace
+node scripts/check-copy.mjs   # fails on em or en dashes, takes optional folders
+pnpm --filter web <script>    # run one script in one workspace
+```
+No test runner, linter or CI exists yet (scope feature 2). Do not invent one.
 
 ## Source of truth, in this order
 1. `docs/specs/` (written by `/architect`) for any decision once it exists.
@@ -43,3 +75,6 @@ This project uses the jsmastery-pro agentic workflow skills (`/scope`, `/audit`,
 
 ## Language and tone for anything user-facing
 Authoritative and conversational. A senior adviser talking to a founder. "We" for the firm, "you" for the client. State the benefit in the first sentence. Plain words, exact meaning.
+
+## Context files
+- [apps/web/AGENTS.md](apps/web/AGENTS.md) (Next.js app rules: bundled Next 16 docs, content modules, the next dev block)
