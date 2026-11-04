@@ -11,7 +11,7 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 
 | # | Feature | Phase | Status |
 |---|---------|-------|--------|
-| 1 | Stack and architecture | Slice 1 | planned |
+| 1 | Stack and architecture | Slice 1 | in-progress |
 | 2 | Coding standards and tooling | Slice 1 | planned |
 | 3 | Design system and base layout | Slice 1 | planned |
 | 4 | Home page on the locked copy | Slice 2 | planned |
@@ -34,10 +34,14 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 ## Slice 1: Foundation
 Style: Facade (UI first, no database). Tier: Beta. Enough ground to render the Home page, nothing more. Express and Postgres are not installed until Slice 5.
 
-### 1. Stack and architecture · needs a decision
+### 1. Stack and architecture
 Record the decided PENN stack as a spec and scaffold only the runnable Next.js skeleton Home needs. The spec also settles repo layout, how Next.js will talk to the Express API later, and where typed content modules live. (basis: foundations before features; stack decided in `01-decisions.md`)
+spec [0001](../specs/0001-stack-and-architecture/index.md)
 **Done when:** the stack is recorded as Proposed in `docs/specs/`, nothing decided in `01-decisions.md` is reopened, and the scaffold boots locally and passes a build.
-- [ ] Decide the stack (spec): `/architect stack and architecture`
+- [x] Decide the stack (spec): `/architect stack and architecture`
+- [ ] Scaffold from the decision: `/develop stack and architecture`
+- [ ] Verify it: `/check verify stack and architecture`
+- [ ] Test it: `/test stack and architecture`
 
 ### 2. Coding standards and tooling
 Capture conventions from the real scaffold into `AGENTS.md` (keeping every current rule, adding real commands), then install lint, format and pre commit checks, with `scripts/check-copy.mjs` wired in so dashes fail the commit.
