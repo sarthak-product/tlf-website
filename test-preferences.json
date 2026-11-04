@@ -1,0 +1,9 @@
+{
+  "tool": "vitest",
+  "gate": null,
+  "additionalTools": [],
+  "e2eTool": "none",
+  "testDir": "beside the source, shared helpers in apps/web/src/test",
+  "filePattern": "*.test.ts / *.test.tsx",
+  "packageManager": "pnpm"
+}

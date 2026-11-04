@@ -12,10 +12,11 @@
     "build": "pnpm --filter web build",
     "start": "pnpm --filter web start",
     "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
     "lint": "biome lint .",
     "format": "biome format --write .",
     "tokens": "node scripts/build-tokens.mjs",
-    "check": "biome check . && pnpm typecheck && node scripts/build-tokens.mjs --check && node scripts/check-contrast.mjs && node scripts/check-copy.mjs"
+    "check": "biome check . && pnpm typecheck && node scripts/build-tokens.mjs --check && node scripts/check-contrast.mjs && node scripts/check-copy.mjs && pnpm test"
   },
   "devDependencies": {
     "@biomejs/biome": "2.6.5"
