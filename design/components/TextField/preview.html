@@ -1,0 +1,31 @@
+<!-- @dsCard group="Forms" height=300 subtitle="Default, focus, error, disabled" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Text field</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; padding: var(--space-5); background: var(--bg); color: var(--text); font-family: var(--font-sans); }
+.grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-5); }
+.field { display: flex; flex-direction: column; gap: var(--space-2); }
+label { font: 500 14px/20px var(--font-sans); color: var(--text); }
+input { box-sizing: border-box; min-height: 44px; padding: 0 var(--space-4); border: 1px solid var(--border-strong); border-radius: var(--radius-md); background: var(--surface); color: var(--text); font: 400 16px/24px var(--font-sans); }
+input:focus-visible, input.is-focus { outline: 2px solid var(--focus); outline-offset: 2px; }
+input.is-error { border-color: var(--danger); }
+input:disabled { background: var(--surface-tint); color: var(--text-muted); border-color: var(--border); }
+.hint { font: 400 14px/22px var(--font-sans); color: var(--text-muted); }
+.error { display: flex; align-items: flex-start; gap: var(--space-2); font: 400 14px/22px var(--font-sans); color: var(--danger); }
+.error svg { flex: 0 0 auto; margin-top: 3px; }
+</style>
+</head>
+<body>
+<div class="grid">
+<div class="field"><label for="f1">Work email</label><input id="f1" type="email" placeholder="name@company.com"><span class="hint">Use the address you check most.</span></div>
+<div class="field"><label for="f2">Company name</label><input id="f2" class="is-focus" type="text" value="Sharma Components"><span class="hint">As it appears on your registration.</span></div>
+<div class="field"><label for="f3">Work email</label><input id="f3" class="is-error" type="email" value="name@company" aria-invalid="true" aria-describedby="e3"><span id="e3" class="error"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.5l8.5 15h-17z M12 10v4 M12 17h.01"></path></svg>Enter an email address, for example name@company.com.</span></div>
+<div class="field"><label for="f4">Phone</label><input id="f4" type="tel" value="Added by your administrator" disabled></div>
+</div>
+</body>
+</html>

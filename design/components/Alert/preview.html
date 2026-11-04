@@ -1,0 +1,31 @@
+<!-- @dsCard group="Status" height=340 subtitle="Sample copy, four statuses" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Alert</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; padding: var(--space-5); background: var(--bg); color: var(--text); font-family: var(--font-sans); }
+.stack { display: flex; flex-direction: column; gap: var(--space-3); max-width: 640px; }
+.alert { display: flex; align-items: flex-start; gap: var(--space-3); padding: var(--space-4); border: 1px solid var(--border); border-radius: var(--radius-md); }
+.alert svg { flex: 0 0 auto; margin-top: 2px; }
+.title { font: 500 16px/24px var(--font-sans); }
+.body { font: 400 14px/22px var(--font-sans); color: var(--text); }
+.success { background: var(--success-tint); } .success .title { color: var(--success); }
+.warning { background: var(--warning-tint); } .warning .title { color: var(--warning); }
+.danger { background: var(--danger-tint); } .danger .title { color: var(--danger); }
+.info { background: var(--accent-tint); } .info .title { color: var(--accent); }
+.success svg { color: var(--success); } .warning svg { color: var(--warning); } .danger svg { color: var(--danger); } .info svg { color: var(--accent); }
+</style>
+</head>
+<body>
+<div class="stack">
+<div class="alert success" role="status"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg><div><div class="title">Return filed</div><div class="body">Acknowledgement saved to the client folder.</div></div></div>
+<div class="alert warning" role="status"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v5.5l3.5 2M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17z"></path></svg><div><div class="title">Due soon</div><div class="body">The next advance tax instalment is coming up.</div></div></div>
+<div class="alert danger" role="alert"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.5l8.5 15h-17z M12 10v4 M12 17h.01"></path></svg><div><div class="title">Deadline missed</div><div class="body">A late fee may apply. Review the filing.</div></div></div>
+<div class="alert info" role="status"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 11v5 M12 7.5h.01 M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17z"></path></svg><div><div class="title">Review pending</div><div class="body">A reviewer checks the figures before filing.</div></div></div>
+</div>
+</body>
+</html>

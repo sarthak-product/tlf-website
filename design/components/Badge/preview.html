@@ -1,0 +1,30 @@
+<!-- @dsCard group="Status" height=120 subtitle="Success, warning, danger, info, neutral" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Badge</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; padding: var(--space-5); background: var(--bg); color: var(--text); font-family: var(--font-sans); }
+.row { display: flex; flex-wrap: wrap; gap: var(--space-3); align-items: center; }
+.badge { display: inline-flex; align-items: center; gap: var(--space-2); padding: 4px var(--space-3) 4px var(--space-2); border-radius: var(--radius-sm); font: 500 14px/20px var(--font-sans); }
+.success { background: var(--success-tint); color: var(--success); }
+.warning { background: var(--warning-tint); color: var(--warning); }
+.danger { background: var(--danger-tint); color: var(--danger); }
+.info { background: var(--accent-tint); color: var(--accent); }
+.neutral { background: var(--surface-tint); color: var(--text-muted); padding-left: var(--space-3); }
+svg { flex: 0 0 auto; }
+</style>
+</head>
+<body>
+<div class="row">
+<span class="badge success"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"></path></svg>Filed</span>
+<span class="badge warning"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 7v5.5l3.5 2M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17z"></path></svg>Due soon</span>
+<span class="badge danger"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4.5l8.5 15h-17z M12 10v4 M12 17h.01"></path></svg>Overdue</span>
+<span class="badge info"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 11v5 M12 7.5h.01 M12 3.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17z"></path></svg>In review</span>
+<span class="badge neutral">Draft</span>
+</div>
+</body>
+</html>

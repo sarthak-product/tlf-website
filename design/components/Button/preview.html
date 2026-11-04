@@ -1,0 +1,40 @@
+<!-- @dsCard group="Actions" height=220 subtitle="Primary, secondary and text" -->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Button</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+body { margin: 0; padding: var(--space-5); background: var(--bg); color: var(--text); font-family: var(--font-sans); }
+.row { display: flex; flex-wrap: wrap; gap: var(--space-4); align-items: center; margin-bottom: var(--space-4); }
+.cap { flex: 0 0 96px; font-size: 12px; line-height: 18px; color: var(--text-muted); }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 var(--space-5); border: 1px solid transparent; border-radius: var(--radius-md); font: 500 15px/20px var(--font-sans); cursor: pointer; transition: background-color var(--duration-fast) var(--easing-standard); }
+.primary { background: var(--accent); color: var(--on-accent); }
+.primary:hover, .primary.is-hover { background: var(--accent-hover); }
+.secondary { background: var(--surface); color: var(--text); border-color: var(--border-strong); }
+.secondary:hover, .secondary.is-hover { background: var(--surface-tint); }
+.text { background: transparent; color: var(--accent); padding: 0 var(--space-2); text-decoration: underline; text-underline-offset: 3px; }
+.text:hover, .text.is-hover { color: var(--accent-hover); }
+.btn:focus-visible, .btn.is-focus { outline: 2px solid var(--focus); outline-offset: 2px; }
+.btn:disabled { background: var(--surface-tint); color: var(--text-muted); border-color: var(--border); cursor: not-allowed; text-decoration: none; }
+</style>
+</head>
+<body>
+<div class="row"><span class="cap">Default</span>
+<button class="btn primary" type="button">Book a consultation</button>
+<button class="btn secondary" type="button">Download checklist</button>
+<button class="btn text" type="button">Read more</button></div>
+<div class="row"><span class="cap">Hover</span>
+<button class="btn primary is-hover" type="button">Book a consultation</button>
+<button class="btn secondary is-hover" type="button">Download checklist</button>
+<button class="btn text is-hover" type="button">Read more</button></div>
+<div class="row"><span class="cap">Focus</span>
+<button class="btn primary is-focus" type="button">Book a consultation</button>
+<button class="btn secondary is-focus" type="button">Download checklist</button></div>
+<div class="row"><span class="cap">Disabled</span>
+<button class="btn primary" type="button" disabled>Book a consultation</button>
+<button class="btn secondary" type="button" disabled>Download checklist</button></div>
+</body>
+</html>
