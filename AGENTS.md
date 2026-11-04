@@ -1,6 +1,6 @@
 # Lotus Feet Consultancy website
 
-Source code for the Lotus Feet Consultancy corporate website (LF). Seed context file, written by hand before any code exists. Run `/audit` once the project is scaffolded and let it refine this file from the real code. Keep the rules below.
+This file is the project context for agents working on the Lotus Feet Consultancy website (LF), and /audit and /sync keep it current.
 
 ## What this project is
 - A corporate site for a virtual CFO, compliance and funding consultancy in India. B2B. Founders and CXOs are the reader.
@@ -72,6 +72,9 @@ If two sources disagree, stop and ask Sarthak. Do not pick one silently.
 
 ## Workflow
 This project uses the jsmastery-pro agentic workflow skills (`/scope`, `/audit`, `/architect`, `/develop`, `/check`, `/test`, `/document`, `/sync`, `/debug`). Start prompt: `START-PROMPT.md`. Specs go in `docs/specs/`, scope in `docs/scope/`. Project handover files stay in `docs/context/` and are edited only by Sarthak or on his instruction.
+
+## Build approach
+Tracer Bullet: build each slice end to end through every layer, working, then thicken it. Slices 1 to 3 build the interface first on typed content modules (Facade). Beta by default. GA for the database and consent, admin login, and backup and restore slices.
 
 ## Language and tone for anything user-facing
 Authoritative and conversational. A senior adviser talking to a founder. "We" for the firm, "you" for the client. State the benefit in the first sentence. Plain words, exact meaning.
