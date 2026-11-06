@@ -226,3 +226,54 @@ describe("server rendered Home page: nothing that does not belong", () => {
     expect("Costs are usually a fixed monthly fee.").not.toMatch(PHONE);
   });
 });
+
+describe("server rendered Home page: the redesign layout (scope 4c)", () => {
+  it("sets services and principles in a zig-zag, alternating sides, with one shape each", () => {
+    const html = renderHomeDocument();
+    const items = html.match(/<li\b[^>]*data-zig="(start|end)"[\s\S]*?<\/li>/g) ?? [];
+    expect(items).toHaveLength(doc.services.length + doc.principles.length);
+    const sides = items.map((item) => /data-zig="(start|end)"/.exec(item)?.[1]);
+    expect(sides).toEqual(["start", "end", "start", "end", "start", "start", "end", "start"]);
+    for (const item of items) {
+      expect(item.match(/<svg\b[^>]*data-shape=/g) ?? []).toHaveLength(1);
+    }
+  });
+
+  it("hides every shape and mark from assistive technology", () => {
+    const html = renderHomeDocument();
+    const svgs = html.match(/<svg\b[^>]*>/g) ?? [];
+    expect(svgs.length).toBe(1 + 1 + doc.services.length + doc.principles.length);
+    for (const svg of svgs) {
+      expect(svg).toContain('aria-hidden="true"');
+      expect(svg).toContain('focusable="false"');
+    }
+  });
+
+  it("repeats only the hero eyebrow in the marquee, hidden from assistive technology", () => {
+    const html = renderHomeDocument();
+    const band = /<div\b[^>]*data-marquee=""[^>]*>[\s\S]*?<\/div><\/div>/.exec(html)?.[0] ?? "";
+    expect(band).toContain('aria-hidden="true"');
+    const copies = band.match(/<span\b[^>]*>([^<]*)<\/span>/g) ?? [];
+    expect(copies.length).toBeGreaterThan(1);
+    for (const copy of copies) {
+      expect(visibleText(copy)).toBe(doc.eyebrow);
+    }
+  });
+
+  it("sends the final state: no start state, pin or hidden style is in the server HTML", () => {
+    const html = renderHomeDocument();
+    expect(html).not.toContain("data-pinned");
+    expect(html).not.toMatch(/style="[^"]*(opacity|visibility|display:\s*none|transform)/);
+    expect(html).not.toMatch(/\shidden(=|\s|>)/);
+  });
+
+  it("keeps the questions as one column of native details elements after the zig-zag", () => {
+    const html = renderHomeDocument();
+    const questions = /<section\b[^>]*aria-labelledby="questions-heading"[\s\S]*?<\/section>/.exec(
+      html,
+    )?.[0];
+    expect(questions).toBeDefined();
+    expect(questions).not.toContain("data-zig");
+    expect(questions?.match(/<details\b/g) ?? []).toHaveLength(6);
+  });
+});

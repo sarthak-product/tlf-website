@@ -94,6 +94,15 @@ svg {
   padding-inline: var(--page-gutter);
 }
 
+/* The smooth scroll wrappers (layout.tsx). Plain blocks that keep the body's column, so
+   main still fills the screen. ScrollSmoother takes them over on desktop only. */
+.smooth-wrapper,
+.smooth-content {
+  display: flex;
+  flex: 1 0 auto;
+  flex-direction: column;
+}
+
 .main {
   flex: 1 0 auto;
 }

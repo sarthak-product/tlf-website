@@ -1,0 +1,41 @@
+/*
+ * The marquee band: brand-ink type on a brand-sky field, the same in both themes.
+ * The track is wider than the screen and clipped, so the band's height is fixed by one
+ * line of type and nothing shifts when it moves.
+ */
+.band {
+  overflow: clip;
+  padding-block: var(--space-5);
+  background-color: var(--color-brand-sky);
+  color: var(--color-brand-ink);
+}
+
+@media (min-width: 48rem) {
+  .band {
+    padding-block: var(--space-6);
+  }
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  gap: var(--space-7);
+  padding-inline-start: var(--page-gutter);
+}
+
+.item {
+  flex: none;
+  font-size: var(--type-h1-size);
+  font-weight: var(--type-h1-weight);
+  line-height: var(--type-h1-line);
+  letter-spacing: var(--type-h1-tracking);
+  white-space: nowrap;
+}
+
+@media (min-width: 48rem) {
+  .item {
+    font-size: var(--type-display-size);
+    line-height: var(--type-display-line);
+    letter-spacing: var(--type-display-tracking);
+  }
+}

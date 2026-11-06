@@ -16,6 +16,7 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 | 3 | Design system and base layout | Slice 1 | in-progress |
 | 4 | Home page on the locked copy | Slice 2 | done |
 | 4b | Home visual and motion | Slice 2 | in-progress |
+| 4c | Home redesign: layout and motion | Slice 2 | in-progress |
 | 5 | Demo build for the CA | Slice 3 | planned |
 | 6 | Book a call route | Slice 4 | planned |
 | 7 | Data model | Slice 5 | planned |
@@ -77,6 +78,18 @@ code in apps/web (built from the `/develop` brief, no spec yet; the spec is stil
   - [x] Motion: mark draw, section and heading reveals, scrubbed line, hero parallax, FAQ open and close, all off for reduced motion
 - [ ] Verify it: `/check verify home visual and motion`
 - [ ] Test it: `/test home visual and motion`
+
+### 4c. Home redesign: layout and motion · Beta
+Sarthak found the Home page flat, like a PDF, with no wow factor. This sets the page in a zig-zag in place of the single left edge, with services and principles alternating left and right and the FAQ kept in one column, alternates full width deep blue and pale fields down the page with the one sky accent, adds a fluid `display-xl` size for the hero and closing headlines, a marquee of the eyebrow that moves only with the scroll, original monoline SVG shapes drawn from the LF mark geometry, ScrollSmoother on desktop, and a pinned, scrubbed principles section on desktop. Techniques were studied on gsap.com/scroll, nothing was copied. Sarthak picked each choice in the `/develop` question rounds and authorised writing them into `design.md` and `design/README.md`. (basis: Sarthak's `/develop` brief)
+code in apps/web (built from the `/develop` brief and Sarthak's answers, no spec yet; the spec is still owed)
+**Done when:** the copy is unchanged and hidden sections stay hidden, every word shows without JavaScript, reduced motion shows the final state with no animation, smoothing, pinning and scrubbing are off below 1024px and for reduced motion, layout shift is zero, the FAQ stays native details elements, every colour pair passes in both themes, each asset is recorded in `docs/assets.md`, and `pnpm check` passes.
+- [ ] Design it (spec): `/architect home redesign layout and motion`
+- [x] Build it: `/develop home redesign layout and motion`
+  - [x] Zig-zag layout, colour fields, display-xl and the marquee, written into `design.md` and `design/README.md`
+  - [x] Original monoline shapes from the mark, recorded in `docs/assets.md`
+  - [x] Motion: ScrollSmoother, pinned principles, scrubbed marquee, shape draws and text reveals, all off for reduced motion
+- [ ] Verify it: `/check verify home redesign layout and motion`
+- [ ] Test it: `/test home redesign layout and motion`
 
 ## Slice 3: Stop point
 Style: Facade. Tier: Alpha. This is a gate, not a build. Slices 4 onward wait for you to say go.

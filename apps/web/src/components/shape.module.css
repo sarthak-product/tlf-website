@@ -1,0 +1,9 @@
+/* Square, so its box is known before it draws: no layout shift. */
+.shape {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  height: auto;
+  overflow: visible;
+  color: var(--color-accent);
+}

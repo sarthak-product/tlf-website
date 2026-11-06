@@ -1,42 +1,45 @@
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import styles from "./section.module.css";
 
-// One stop on the line that runs down the page. Sections carry no card and no shadow:
-// space and a hairline do the separating (design.md, Page structure of Home).
+// One full width band of the Home page. Sections carry no card and no shadow: colour
+// fields, space and type do the separating (design.md, Page structure of Home).
 // A section with no content is never rendered, so it leaves no heading and no gap.
-// `marker` is the line height of the first line of text, so the stop sits level with it.
-// `field` sets the section on a full width brand field: `hero` is the one soft tonal
-// gradient from brand-ink to brand-deep, `closing` is flat brand-deep. Text on a field is
-// brand-mist (design/README.md, Brand fields).
 //
-// The data attributes are hooks for the motion script (site-motion.tsx). They change
-// nothing in the server HTML: every section, line and stop renders complete.
+// `field` picks the ground, and the page alternates them (design/README.md, Colour fields):
+//   page    bg, the theme background (the default)
+//   tint    surface-tint, a pale field that follows the theme
+//   deep    brand-deep, the same in both themes
+//   hero    the one soft tonal gradient, brand-ink to brand-deep, hero only
+// On deep and hero the theme colour variables point at brand colours, so text, buttons,
+// focus rings and shapes follow with no new component rules.
+//
+// `id` and the data attribute are hooks for anchors and the motion script. They change
+// nothing in the server HTML: every section renders complete.
 export function Section({
   heading,
   headingId,
-  marker,
-  field,
+  field = "page",
+  className,
   children,
 }: {
   heading?: string;
   headingId?: string;
-  marker?: string;
-  field?: "hero" | "closing";
+  field?: "page" | "tint" | "deep" | "hero";
+  className?: string;
   children: ReactNode;
 }) {
-  const style = marker ? ({ "--stop-first-line": marker } as CSSProperties) : undefined;
-  const classes = [styles.section, field ? styles.field : null, field ? styles[field] : null]
+  const brand = field === "deep" || field === "hero";
+  const classes = [styles.section, styles[field], brand ? styles.brand : null, className]
     .filter(Boolean)
     .join(" ");
   return (
     <section
       className={classes}
-      style={style}
       aria-labelledby={heading ? headingId : undefined}
-      data-section={field ?? ""}
+      data-section={field}
     >
       <div className="page">
-        <div className={styles.stop} data-line="">
+        <div className={styles.inner}>
           {heading ? (
             <h2 id={headingId} className={styles.heading} data-split="">
               {heading}

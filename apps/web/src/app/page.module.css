@@ -1,10 +1,35 @@
 /* Home page layout. Values come from tokens only. */
 
-/* Hero: text on the left, the large mark on the right. On narrow screens the mark sits
-   under the text, right aligned, so the headline comes first. */
-.hero {
+/* The fluid size for the hero and closing headlines: h1 on phones, growing with the
+   viewport to display-xl at 1280px wide (104 / 1280 = 8.125vw). */
+.headline,
+.closing {
+  font-size: clamp(var(--type-h1-size), 8.125vw, var(--type-display-xl-size));
+  font-weight: var(--type-display-xl-weight);
+  line-height: var(--type-display-xl-line);
+  letter-spacing: var(--type-display-xl-tracking);
+}
+
+/* Hero: the eyebrow, then the headline across the full width, then the supporting line
+   and the button on the left with the large mark on the right. On narrow screens the
+   mark sits under the text, right aligned. */
+.eyebrow {
+  font-size: var(--type-label-size);
+  font-weight: var(--type-label-weight);
+  line-height: var(--type-label-line);
+  letter-spacing: var(--type-label-tracking);
+  color: var(--color-text-muted);
+}
+
+.headline {
+  max-width: 14em;
+  margin-block-start: var(--space-5);
+}
+
+.heroFoot {
   display: grid;
   gap: var(--space-7);
+  margin-block-start: var(--space-7);
 }
 
 .heroText {
@@ -16,35 +41,8 @@
   width: min(60%, 16rem);
 }
 
-@media (min-width: 64rem) {
-  .hero {
-    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
-    align-items: center;
-    gap: var(--space-8);
-  }
-
-  .heroMark {
-    justify-self: stretch;
-    width: 100%;
-  }
-}
-
-.eyebrow {
-  font-size: var(--type-label-size);
-  font-weight: var(--type-label-weight);
-  line-height: var(--type-label-line);
-  letter-spacing: var(--type-label-tracking);
-  color: var(--color-text-muted);
-}
-
-.headline {
-  max-width: 18em;
-  margin-block-start: var(--space-4);
-}
-
 .lead {
   max-width: 36rem;
-  margin-block-start: var(--space-5);
   font-size: var(--type-body-lg-size);
   line-height: var(--type-body-lg-line);
 }
@@ -54,14 +52,16 @@
 }
 
 @media (min-width: 48rem) {
-  .headline {
-    font-size: var(--type-display-size);
-    line-height: var(--type-display-line);
-    letter-spacing: var(--type-display-tracking);
+  .heroFoot {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    align-items: end;
+    margin-block-start: var(--space-8);
   }
 
-  .lead {
-    margin-block-start: var(--space-6);
+  .heroMark {
+    justify-self: end;
+    width: 100%;
+    max-width: 24rem;
   }
 
   .action {
@@ -69,13 +69,21 @@
   }
 }
 
-/* The firm statement, and the people line when it shows */
+/* The firm statement, and the people line when it shows. Large and set to the left. */
 .statement {
-  max-width: 32em;
+  max-width: 22em;
   font-size: var(--type-h2-size);
   font-weight: 400;
   line-height: var(--type-h2-line);
   letter-spacing: var(--type-h2-tracking);
+}
+
+@media (min-width: 48rem) {
+  .statement {
+    font-size: var(--type-h1-size);
+    line-height: var(--type-h1-line);
+    letter-spacing: var(--type-h1-tracking);
+  }
 }
 
 .peopleLink {
@@ -98,7 +106,140 @@
   width: auto;
 }
 
-/* Rows: services, principles, engagement steps. Hairlines and space, no cards. */
+/*
+ * The zig-zag: services and principles. Each item is its text and an original shape. On
+ * phones the text stays on one left edge and the shape swings from side to side above it.
+ * From 768px the item is two columns, and the text and shape swap sides on every other
+ * item. Text is always left aligned, so lines stay easy to read.
+ */
+.zigzag {
+  display: grid;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.zig {
+  display: grid;
+  gap: var(--space-5);
+}
+
+.zigShape {
+  grid-row: 1;
+  width: var(--space-9);
+  transition: transform var(--duration-base) var(--easing-standard);
+}
+
+.zig[data-zig="end"] .zigShape {
+  justify-self: end;
+}
+
+.zigText {
+  min-width: 0;
+  max-width: 36rem;
+}
+
+.zigTitle {
+  font-size: var(--type-h2-size);
+  line-height: var(--type-h2-line);
+  letter-spacing: var(--type-h2-tracking);
+}
+
+.zigTitle a {
+  color: var(--color-text);
+}
+
+.zigLine {
+  margin-block-start: var(--space-3);
+  font-size: var(--type-body-lg-size);
+  line-height: var(--type-body-lg-line);
+}
+
+@media (min-width: 48rem) {
+  .zigzag {
+    gap: var(--space-9);
+  }
+
+  .zig {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: center;
+    gap: var(--space-7);
+  }
+
+  .zigShape {
+    grid-row: auto;
+    justify-self: center;
+    width: min(100%, 14rem);
+  }
+
+  .zig[data-zig="end"] {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+  }
+
+  .zig[data-zig="end"] .zigShape {
+    grid-row: 1;
+    grid-column: 1;
+    justify-self: center;
+  }
+
+  .zig[data-zig="end"] .zigText {
+    grid-column: 2;
+  }
+
+  .zigTitle {
+    font-size: var(--type-h1-size);
+    line-height: var(--type-h1-line);
+    letter-spacing: var(--type-h1-tracking);
+  }
+}
+
+/* Hover: the shape steps a little toward the text. A change of state, off for reduced
+   motion. */
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .zig:hover .zigShape {
+    transform: translateX(calc(-1 * var(--space-3)));
+  }
+
+  .zig[data-zig="end"]:hover .zigShape {
+    transform: translateX(var(--space-3));
+  }
+}
+
+/*
+ * The pinned principles, desktop only. The motion script sets data-pinned on the list
+ * from 1024px when motion is allowed, and only then are the three principles stacked in
+ * one place to step through as the section is held. Without the attribute (no JavaScript,
+ * phones, reduced motion) they are the normal zig-zag above.
+ */
+.zigzag[data-pinned] {
+  grid-template-areas: "step";
+}
+
+.zigzag[data-pinned] > .zig {
+  grid-area: step;
+}
+
+/* Numbers for ordered items. Decorative, the list is already ordered. */
+.numbered {
+  counter-reset: item;
+}
+
+.numbered > li {
+  counter-increment: item;
+}
+
+.numbered .zigText::before {
+  content: counter(item);
+  display: block;
+  margin-block-end: var(--space-3);
+  font-size: var(--type-h1-size);
+  font-weight: var(--type-h1-weight);
+  line-height: var(--type-h1-line);
+  color: var(--color-accent);
+}
+
+/* Rows: engagement steps, when they have copy. Hairlines and space, no cards. */
 .rows {
   margin: 0;
   padding: 0;
@@ -118,67 +259,33 @@
   line-height: var(--type-h3-line);
 }
 
-.rowTitle a {
-  color: var(--color-text);
-}
-
 .rowText {
   max-width: 40rem;
-  color: var(--color-text);
 }
 
-@media (min-width: 64rem) {
-  .row {
-    grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
-    gap: var(--space-6);
-    padding-block: var(--space-6);
-  }
-
-  .numbered .row {
-    grid-template-columns: var(--space-7) minmax(0, 5fr) minmax(0, 6fr);
-  }
-}
-
-/* Numbers for ordered rows. Decorative, the list is already ordered. */
-.numbered {
-  counter-reset: row;
-}
-
-.numbered .row {
-  counter-increment: row;
-}
-
-.numbered .row::before {
-  content: counter(row);
+.rows.numbered > li::before {
+  content: counter(item);
   font-size: var(--type-label-size);
   font-weight: var(--type-label-weight);
   line-height: var(--type-h3-line);
   color: var(--color-text-muted);
 }
 
-@media (max-width: 63.99rem) {
-  .numbered .row {
-    gap: var(--space-1);
+@media (min-width: 64rem) {
+  .row {
+    grid-template-columns: var(--space-7) minmax(0, 5fr) minmax(0, 6fr);
+    gap: var(--space-6);
+    padding-block: var(--space-6);
   }
 }
 
-/* Questions */
+/* Questions: one column, so the answers stay easy to scan. */
 .faq {
+  max-width: 48rem;
   border-top: 1px solid var(--color-border);
 }
 
 /* Closing */
 .closing {
-  max-width: 20em;
-  font-size: var(--type-h1-size);
-  line-height: var(--type-h1-line);
-  letter-spacing: var(--type-h1-tracking);
-}
-
-@media (min-width: 48rem) {
-  .closing {
-    font-size: var(--type-display-size);
-    line-height: var(--type-display-line);
-    letter-spacing: var(--type-display-tracking);
-  }
+  max-width: 13em;
 }

@@ -16,6 +16,8 @@ export const metadata: Metadata = {
 // prefers-color-scheme in tokens.css. There is no toggle.
 // SiteMotion is the only client component. It renders nothing and adds motion in the
 // browser, so the HTML the server sends is complete and final on its own.
+// The two smooth scroll wrappers are plain blocks in this HTML. On desktop, when motion is
+// allowed, SiteMotion hands them to ScrollSmoother. The skip link stays outside them.
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${arimo.variable} ${quicksand.variable}`}>
@@ -23,10 +25,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <a className="skip-link" href="#main">
           Skip to main content
         </a>
-        <SiteHeader />
-        <main id="main" className="main">
-          {children}
-        </main>
+        <div className="smooth-wrapper" data-smooth-wrapper="">
+          <div className="smooth-content" data-smooth-content="">
+            <SiteHeader />
+            <main id="main" className="main">
+              {children}
+            </main>
+          </div>
+        </div>
         <SiteMotion />
       </body>
     </html>

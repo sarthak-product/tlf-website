@@ -35,23 +35,35 @@ Calm, exact, senior. A well-set financial report, not a fintech dashboard. Space
 ## Layout
 - Root layout: skip link, header, then `main`. No footer yet, because footer lines are open copy (`docs/context/03-home-copy.md`).
 - The header holds the lockup and the Book a call button (secondary) only. Navigation labels wait for approved copy.
-- `.page` is the page frame: one left edge, gutter `space-4` on mobile and `space-6` from 768px.
+- `.page` is the page frame: gutter `space-4` on mobile and `space-6` from 768px. Inside it Home is a zig-zag, not one left edge (below).
 - `--page-max-width` is 72rem. `tokens.json` does not set it. This value is an open item for Sarthak to confirm.
-- Home sections sit on one line down the left edge. `components/section.tsx` draws the hairline and one square stop per section, so hidden sections leave no gap. Content is indented `space-5` on mobile and `space-7` from 768px.
-- Brand fields: `Section` takes `field="hero"` or `field="closing"`. Inside a field the theme colour variables point at brand colours (text `brand-mist`, accent `brand-sky`, label `brand-ink`, hover `brand-mist`, focus `brand-sky`, selection `brand-steel`), so buttons, focus rings, the line and its stop follow with no new component rules. The hero carries the one gradient, `brand-ink` to `brand-deep`. The closing is flat `brand-deep`. The pairs are in the contrast check. Exception authorised by Sarthak, recorded in `design/README.md` under Brand fields.
-- The hero puts the text on the left and the large mark (`brand-mist`) on the right from 64rem. Below that the mark sits under the text, right aligned.
+- Home sections are full width bands (`components/section.tsx`). A hidden section renders nothing, so it leaves no band and no gap. Sections pad `space-8` on mobile and `space-9` from 768px. Section headings are set at the `h1` size on phones and `display` from 768px.
+- Colour fields: `Section` takes `field="page"` (`bg`, the default), `"tint"` (`surface-tint`), `"deep"` (`brand-deep`) or `"hero"` (the one gradient, `brand-ink` to `brand-deep`). Down the page: hero, the marquee band (`brand-sky`), the firm on `page`, what we do on `deep`, how we think on `tint`, questions on `page`, the closing on `deep`. Inside `deep` and `hero` the theme colour variables point at brand colours (text `brand-mist`, accent `brand-sky`, label `brand-ink`, hover `brand-mist`, focus `brand-sky`, selection and hairlines `brand-steel`), so buttons, focus rings and shapes follow with no new component rules. The pairs are in the contrast check. Authorised by Sarthak, recorded in `design/README.md` under Colour fields.
+- Zig-zag (authorised by Sarthak for scope 4c): what we do and how we think are lists of items, each its text and an original shape (`components/shape.tsx`). From 768px each item is two columns and the text and shape swap sides on every other item (`data-zig="start"` or `"end"`). On phones the text keeps one left edge and the shape swings from side to side above it. Text is always left aligned. The questions stay one column.
+- The hero sets the eyebrow, then the headline across the full width in `display-xl`, then the supporting line and button on the left with the large mark (`brand-mist`) on the right from 768px. Below that the mark sits under the text, right aligned.
+- `display-xl` is fluid: `clamp(h1 size, 8.125vw, display-xl size)`, so it is 40px on phones and 104px at 1280px wide. Hero headline and closing headline only.
+- The marquee (`components/marquee.tsx`) is a `brand-sky` band between the hero and the firm, repeating the hero eyebrow in `brand-ink` at the `h1` size (`display` from 768px). It is hidden from assistive technology, because the hero already says it.
 - Base components built: Button (primary, secondary, text) and the FAQ disclosure. Alert, Badge and TextField are not built, Home does not need them.
 
 ## Motion
-- GSAP 3.15.1, pinned exactly, under GreenSock's standard no charge licence (the package names it in `package.json`). Core, ScrollTrigger and SplitText only. No ScrollSmoother.
+- GSAP 3.15.1, pinned exactly, under GreenSock's standard no charge licence (the package names it in `package.json`). Core, ScrollTrigger, SplitText and ScrollSmoother. ScrollSmoother was chosen by Sarthak for scope 4c.
 - All of it lives in one client component, `apps/web/src/components/site-motion.tsx`, which renders nothing. Pages and the header stay server components. GSAP is imported nowhere else.
-- It finds its targets by data attributes the server markup sets: `data-mark` (the mark's strokes), `data-split` (headings revealed by line), `data-reveal` (blocks), `data-line` (each section's piece of the line), `data-parallax` (the hero mark) and `data-faq` (the details elements).
-- The server HTML and CSS are always the final state. The line and stops use `--line-draw` and `--stop-draw`, which default to 1. Start states are set by the script only, just before each animation.
-- Everything runs inside `gsap.matchMedia` on `(prefers-reduced-motion: no-preference)`, so a reduced motion visitor sees the still page and the native FAQ.
-- The curve is read from `--easing-standard` and the timing from `--duration-base` at run time (`src/lib/ease.ts`). Reveals and each stroke take twice `duration-base`, the FAQ takes `duration-base`.
-- SplitText splits a heading only when it enters, after the fonts load, labels it with its full text while split, and reverts the split when the reveal ends, so the text in the page is the server text again.
+- It finds its targets by data attributes the server markup sets: `data-mark` (the mark's strokes), `data-split` (headings revealed by line), `data-reveal` (blocks), `data-draw` (shapes), `data-words` (the firm statement), `data-marquee` and `data-marquee-track`, `data-pin` and `data-step` (the principles), `data-parallax` (the hero mark), `data-faq` (the details elements) and `data-smooth-wrapper` and `data-smooth-content` (the two plain wrappers in `layout.tsx`).
+- The server HTML and CSS are always the final state. Start states are set by the script only, just before each animation. The principles are stacked for the pin only while the script sets `data-pinned` on the list.
+- Everything runs inside `gsap.matchMedia` on `(prefers-reduced-motion: no-preference)`, so a reduced motion visitor sees the still page, normal scrolling and the native FAQ.
+- On every width: the mark draws (header on load, hero as it enters), headings rise line by line out of a mask, blocks fade in (zig-zag text slides in from its own side from 768px, other blocks rise), shapes draw once as they enter, the hero mark drifts, FAQ items ease open and closed.
+- From 1024px only (`(min-width: 64rem)`): ScrollSmoother eases the scroll (`smooth: 1`, never on touch), the principles section is pinned and its three items step through in one place with their shapes drawing (scrubbed), shapes in what we do draw with the scroll (scrubbed), the firm statement fills from `text-muted` to `text` word by word (scrubbed, through `color-mix`, so it follows the theme), and the marquee slides sideways only while the page scrolls (scrubbed). Below 1024px none of these run and the marquee is still.
+- Nothing loops on its own, nothing follows the cursor, and nothing moves while the reader is still.
+- The curve is read from `--easing-standard` and the timing from `--duration-base` at run time (`src/lib/ease.ts`). Entrances take twice `duration-base`, the FAQ takes `duration-base`. Scrubbed moments follow the scroll and use no curve.
+- SplitText splits a heading only when it enters, after the fonts load, labels it with its full text while split, and reverts the split when the reveal ends. The statement's word split labels the paragraph with its full text the same way.
 - If the script starts more than two seconds after navigation, anything already in view is left as it is rather than hidden and replayed.
-- Only transforms, opacity, stroke dashes and the FAQ height change, so nothing else on the page moves. Measured layout shift is 0.
+- Only transforms, opacity, stroke dashes, the statement colour, the FAQ height and the pinned section's height change. The pinned section is below the first screen, so measured layout shift is 0 (scope 4c, measured at 1280px and 375px in both themes).
+- Hover: in the zig-zag the shape steps `space-3` toward its text, over `duration-base`, only on devices that hover and only when motion is allowed.
+
+## Shapes
+- Original monoline drawings in `apps/web/src/lib/shapes.ts`, drawn for this site, recorded in `docs/assets.md`. One per service and one per principle, in the order of the copy.
+- Grammar of the mark: horizontal and vertical strokes, quarter circle turns, round caps and joins, open ends. A 240 grid, stroke 16, corner radius 32 (44 for the two turns in the funding shape). `shapes.test.ts` fails on any diagonal, any other curve or a stroke outside the grid.
+- Stroke is `currentColor`: `accent` on the page and on `tint`, `brand-sky` on `deep`. Always decorative and hidden from assistive technology.
 
 ## Source files
 - Tokens: `design/tokens.json` (colour for light and dark, type, spacing, radius, shadow, motion).
@@ -67,14 +79,14 @@ Calm, exact, senior. A well-set financial report, not a fintech dashboard. Space
 - Radius never exceeds 8px. No pills.
 - Only menus, dropdowns and dialogs take a shadow.
 - Motion changes state only, uses the one easing curve, and drops to zero for reduced-motion visitors. The one exception is the page motion in `design/README.md` (Page motion), built as described under Motion below.
-- One gradient only: the hero field, `brand-ink` to `brand-deep`. Brand colours appear only on the hero and closing fields.
+- One gradient only: the hero field, `brand-ink` to `brand-deep`. Brand colours appear only on the Home colour fields (hero, the marquee band, what we do, closing).
 - Every interactive element has default, hover, focus and disabled states. Focus ring is 2px solid with 2px offset and is never removed.
 - Status never relies on colour alone: icon plus word.
 - Text contrast 4.5:1, borders and focus rings 3:1, checked in both themes.
-- Imagery: real documents and dashboards the firm supplies. None are supplied yet, so build without images and leave no placeholder pictures.
+- Imagery: real documents and dashboards the firm supplies. None are supplied yet, so build without images and leave no placeholder pictures. The only drawings are the mark and the original shapes (Shapes, above).
 
 ## Page structure of Home
-A line runs down the page and every section is a stop on it. No cards. Sections in order:
+Full width bands that alternate deep blue and pale fields, with services and principles in a zig-zag. No cards. (The earlier line down the left edge with a stop per section was replaced by the zig-zag in scope 4c.) Sections in order:
 hero, the firm, clients, what we do, case studies, how we think, how an engagement runs, key figures, testimonials, people, recent writing, questions, closing.
 Sections with no real content (clients, case studies, key figures, testimonials, people) render nothing until content exists. Wireframes were drawn at desktop width only. Mobile layouts are not drawn: design them in code and show Sarthak.
 

@@ -39,6 +39,11 @@
   --font-mono: ui-monospace, Menlo, Consolas, monospace;
   --font-wordmark: var(--next-font-quicksand, Quicksand), var(--next-font-arimo, Arimo), Arial, sans-serif;
 
+  --type-display-xl-family: var(--font-sans);
+  --type-display-xl-size: 104px;
+  --type-display-xl-line: 1;
+  --type-display-xl-weight: 600;
+  --type-display-xl-tracking: -0.03em;
   --type-display-family: var(--font-sans);
   --type-display-size: 56px;
   --type-display-line: 60px;

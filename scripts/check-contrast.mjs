@@ -55,6 +55,18 @@ const PAIRS = [
   ["brand-sky", "brand-ink", UI, "field focus ring, button fill, line and stop"],
   ["brand-mist", "brand-deep", UI, "hero mark and button hover fill, lightest end"],
   ["brand-mist", "brand-ink", UI, "hero mark, darkest end"],
+  // Home redesign (scope 4c): the alternating fields, the marquee and the shapes.
+  ["brand-mist", "brand-deep", TEXT, "services text on the deep field"],
+  ["brand-sky", "brand-deep", UI, "service shapes on the deep field"],
+  ["brand-ink", "brand-sky", TEXT, "marquee type on the sky band"],
+  ["text", "surface-tint", TEXT, "principles text on the pale field"],
+  ["accent", "surface-tint", TEXT, "principle numerals on the pale field"],
+  ["accent", "surface-tint", UI, "principle shapes on the pale field"],
+  ["accent", "bg", UI, "shapes on the page background"],
+  // The firm statement fills from text-muted to text. Every mix between the two sits
+  // between these two ratios, so checking both ends covers each step.
+  ["text-muted", "bg", TEXT, "statement words, start of the fill"],
+  ["text", "bg", TEXT, "statement words, end of the fill"],
 ];
 
 // Shown for information only. The border token is decorative and carries no meaning.
