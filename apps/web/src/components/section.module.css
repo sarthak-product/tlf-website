@@ -2,6 +2,10 @@
  * The line and its stops. The line is a hairline on the left edge of every section,
  * so consecutive sections join into one line. Each section adds one square stop.
  * Hidden sections render nothing, so the line closes up with no gap.
+ *
+ * --line-draw and --stop-draw are 1 unless the motion script changes them in the
+ * browser, so the line and every stop are fully drawn in the server HTML and without
+ * JavaScript. Scaling a transform moves nothing else on the page.
  */
 .section {
   --stop-pad: var(--space-8);
@@ -29,6 +33,8 @@
   inset-inline-start: 0;
   width: 1px;
   background-color: var(--color-border-strong);
+  transform: scaleY(var(--line-draw, 1));
+  transform-origin: top;
 }
 
 .stop::after {
@@ -40,8 +46,48 @@
   height: var(--space-2);
   background-color: var(--color-accent);
   border-radius: var(--radius-sm);
+  transform: scale(var(--stop-draw, 1));
 }
 
 .heading {
   margin-block-end: var(--space-6);
+}
+
+/*
+ * Brand fields: the hero and the closing. Full width, fixed brand colours, the same in
+ * both themes. The theme tokens are pointed at brand colours inside the field, so text,
+ * buttons, focus rings, selection, the line and its stop all follow without new rules.
+ *   text, muted text      brand-mist
+ *   accent (fill, stop)   brand-sky, label brand-ink, hover brand-mist
+ *   focus ring, line      brand-sky
+ *   selection             brand-steel behind brand-mist
+ * Every pair is in scripts/check-contrast.mjs.
+ */
+.field {
+  --color-text: var(--color-brand-mist);
+  --color-text-muted: var(--color-brand-mist);
+  --color-accent: var(--color-brand-sky);
+  --color-accent-hover: var(--color-brand-mist);
+  --color-accent-tint: var(--color-brand-steel);
+  --color-on-accent: var(--color-brand-ink);
+  --color-focus: var(--color-brand-sky);
+  --color-border-strong: var(--color-brand-sky);
+
+  color: var(--color-text);
+  /* The hero mark's parallax stays inside the field. */
+  overflow: clip;
+}
+
+/* The one gradient on the site: soft and tonal, brand-ink to brand-deep, hero only. */
+.hero {
+  background-color: var(--color-brand-deep);
+  background-image: linear-gradient(
+    160deg,
+    var(--color-brand-ink) 0%,
+    var(--color-brand-deep) 100%
+  );
+}
+
+.closing {
+  background-color: var(--color-brand-deep);
 }

@@ -43,6 +43,18 @@ const PAIRS = [
   ["accent", "surface", UI, "focus ring and primary fill edge"],
   ["accent", "surface-tint", UI, "focus ring"],
   ["accent", "accent-tint", UI, "focus ring"],
+  // Brand fields on Home: the hero (gradient from brand-ink to brand-deep) and the closing
+  // (flat brand-deep). The brand colours are fixed, so these are the same in both themes.
+  // Text is checked against both ends of the gradient. brand-deep is its lightest end.
+  ["brand-mist", "brand-deep", TEXT, "field text, closing and lightest end of hero gradient"],
+  ["brand-mist", "brand-ink", TEXT, "field text, darkest end of hero gradient"],
+  ["brand-ink", "brand-sky", TEXT, "field button label"],
+  ["brand-ink", "brand-mist", TEXT, "field button label on hover"],
+  ["brand-mist", "brand-steel", TEXT, "field selected text"],
+  ["brand-sky", "brand-deep", UI, "field focus ring, button fill, line and stop"],
+  ["brand-sky", "brand-ink", UI, "field focus ring, button fill, line and stop"],
+  ["brand-mist", "brand-deep", UI, "hero mark and button hover fill, lightest end"],
+  ["brand-mist", "brand-ink", UI, "hero mark, darkest end"],
 ];
 
 // Shown for information only. The border token is decorative and carries no meaning.

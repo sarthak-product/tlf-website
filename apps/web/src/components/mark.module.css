@@ -1,0 +1,30 @@
+/*
+ * The stroke colour is one of the two brand file colours, never a new one.
+ * The mark keeps the file's proportions: the viewBox is 530 by 280.
+ */
+.mark {
+  display: block;
+  aspect-ratio: 530 / 280;
+  height: auto;
+  overflow: visible;
+}
+
+/* lf-mark-on-light.svg on light grounds, lf-mark-on-dark.svg on dark grounds. */
+.theme {
+  color: var(--color-brand-deep);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .theme {
+    color: var(--color-brand-mist);
+  }
+}
+
+:root[data-theme="dark"] .theme {
+  color: var(--color-brand-mist);
+}
+
+/* lf-mark-on-dark.svg, for the brand fields. Same in both themes. */
+.mist {
+  color: var(--color-brand-mist);
+}

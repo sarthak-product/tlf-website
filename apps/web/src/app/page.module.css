@@ -1,6 +1,34 @@
 /* Home page layout. Values come from tokens only. */
 
-/* Hero */
+/* Hero: text on the left, the large mark on the right. On narrow screens the mark sits
+   under the text, right aligned, so the headline comes first. */
+.hero {
+  display: grid;
+  gap: var(--space-7);
+}
+
+.heroText {
+  min-width: 0;
+}
+
+.heroMark {
+  justify-self: end;
+  width: min(60%, 16rem);
+}
+
+@media (min-width: 64rem) {
+  .hero {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 4fr);
+    align-items: center;
+    gap: var(--space-8);
+  }
+
+  .heroMark {
+    justify-self: stretch;
+    width: 100%;
+  }
+}
+
 .eyebrow {
   font-size: var(--type-label-size);
   font-weight: var(--type-label-weight);

@@ -33,36 +33,12 @@
   color: var(--color-text);
 }
 
-.markOnLight,
-.markOnDark {
+.lockup .mark {
   height: var(--mark-height);
   width: auto;
   flex: none;
   /* Centre the mark on the cap height of the name. Measured at 200px: caps sit 0.055em lower than the line box centre. */
   transform: translateY(0.055em);
-}
-
-.markOnDark {
-  display: none;
-}
-
-/* Dark follows the system setting. data-theme forces a theme when something sets it. */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .markOnLight {
-    display: none;
-  }
-
-  :root:not([data-theme="light"]) .markOnDark {
-    display: block;
-  }
-}
-
-:root[data-theme="dark"] .markOnLight {
-  display: none;
-}
-
-:root[data-theme="dark"] .markOnDark {
-  display: block;
 }
 
 .name {

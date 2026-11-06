@@ -27,9 +27,9 @@ Calm, exact, senior. A well-set financial report, not a fintech dashboard. Space
 - A build needs network access to fetch the font files.
 
 ## Lockup and mark
-- Built in `apps/web/src/components/lockup.tsx`. The mark is imported from `design/assets/Logos` (no second copy) and the name is type in Quicksand 600.
-- Proportions follow the Mark section of `design/README.md`. Mark height is 0.84em (1.2 times the Quicksand cap height of 0.7em), gap is a quarter of that, and the mark is centred on the cap height. The header sets the lockup at 24px, so the mark is 38px wide.
-- Both mark files are rendered and CSS shows the one that suits the theme.
+- Built in `apps/web/src/components/lockup.tsx`. The mark is drawn inline by `components/mark.tsx` and the name is type in Quicksand 600.
+- The mark's paths, viewBox and stroke settings are in `apps/web/src/lib/mark.ts`. `mark.test.ts` reads both files in `design/assets/Logos` and fails if a single character differs, so the files stay the source. The stroke is `brand-deep` on the light theme and `brand-mist` on the dark theme and on brand fields, the two file colours.
+- Proportions follow the Mark section of `design/README.md`. Mark height is 0.84em (1.2 times the Quicksand cap height of 0.7em), gap is a quarter of that, and the mark is centred on the cap height. The header sets the lockup at 28px (the `h2` size) on mobile and 40px (the `h1` size) from 64rem, so the mark is 45px and 64px wide. At the earlier 24px the mark was 20px high with 2px strokes, the same height, weight and colour as the capitals beside it, so it read as two more letters and not as a mark.
 - Checked at 32px wide on screen: the three strokes stay separate and read as LF on a normal density screen, but the strokes are only about 1.7px, so 32px is the floor. Do not go smaller.
 
 ## Layout
@@ -38,7 +38,20 @@ Calm, exact, senior. A well-set financial report, not a fintech dashboard. Space
 - `.page` is the page frame: one left edge, gutter `space-4` on mobile and `space-6` from 768px.
 - `--page-max-width` is 72rem. `tokens.json` does not set it. This value is an open item for Sarthak to confirm.
 - Home sections sit on one line down the left edge. `components/section.tsx` draws the hairline and one square stop per section, so hidden sections leave no gap. Content is indented `space-5` on mobile and `space-7` from 768px.
+- Brand fields: `Section` takes `field="hero"` or `field="closing"`. Inside a field the theme colour variables point at brand colours (text `brand-mist`, accent `brand-sky`, label `brand-ink`, hover `brand-mist`, focus `brand-sky`, selection `brand-steel`), so buttons, focus rings, the line and its stop follow with no new component rules. The hero carries the one gradient, `brand-ink` to `brand-deep`. The closing is flat `brand-deep`. The pairs are in the contrast check. Exception authorised by Sarthak, recorded in `design/README.md` under Brand fields.
+- The hero puts the text on the left and the large mark (`brand-mist`) on the right from 64rem. Below that the mark sits under the text, right aligned.
 - Base components built: Button (primary, secondary, text) and the FAQ disclosure. Alert, Badge and TextField are not built, Home does not need them.
+
+## Motion
+- GSAP 3.15.1, pinned exactly, under GreenSock's standard no charge licence (the package names it in `package.json`). Core, ScrollTrigger and SplitText only. No ScrollSmoother.
+- All of it lives in one client component, `apps/web/src/components/site-motion.tsx`, which renders nothing. Pages and the header stay server components. GSAP is imported nowhere else.
+- It finds its targets by data attributes the server markup sets: `data-mark` (the mark's strokes), `data-split` (headings revealed by line), `data-reveal` (blocks), `data-line` (each section's piece of the line), `data-parallax` (the hero mark) and `data-faq` (the details elements).
+- The server HTML and CSS are always the final state. The line and stops use `--line-draw` and `--stop-draw`, which default to 1. Start states are set by the script only, just before each animation.
+- Everything runs inside `gsap.matchMedia` on `(prefers-reduced-motion: no-preference)`, so a reduced motion visitor sees the still page and the native FAQ.
+- The curve is read from `--easing-standard` and the timing from `--duration-base` at run time (`src/lib/ease.ts`). Reveals and each stroke take twice `duration-base`, the FAQ takes `duration-base`.
+- SplitText splits a heading only when it enters, after the fonts load, labels it with its full text while split, and reverts the split when the reveal ends, so the text in the page is the server text again.
+- If the script starts more than two seconds after navigation, anything already in view is left as it is rather than hidden and replayed.
+- Only transforms, opacity, stroke dashes and the FAQ height change, so nothing else on the page moves. Measured layout shift is 0.
 
 ## Source files
 - Tokens: `design/tokens.json` (colour for light and dark, type, spacing, radius, shadow, motion).
@@ -53,7 +66,8 @@ Calm, exact, senior. A well-set financial report, not a fintech dashboard. Space
 - Fonts: Arimo for everything. Quicksand 600 for the firm name in the lockup only. Fallback Arial. Helvetica is not in the web stack.
 - Radius never exceeds 8px. No pills.
 - Only menus, dropdowns and dialogs take a shadow.
-- Motion changes state only, uses the one easing curve, and drops to zero for reduced-motion visitors.
+- Motion changes state only, uses the one easing curve, and drops to zero for reduced-motion visitors. The one exception is the page motion in `design/README.md` (Page motion), built as described under Motion below.
+- One gradient only: the hero field, `brand-ink` to `brand-deep`. Brand colours appear only on the hero and closing fields.
 - Every interactive element has default, hover, focus and disabled states. Focus ring is 2px solid with 2px offset and is never removed.
 - Status never relies on colour alone: icon plus word.
 - Text contrast 4.5:1, borders and focus rings 3:1, checked in both themes.

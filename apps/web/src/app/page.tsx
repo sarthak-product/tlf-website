@@ -1,5 +1,6 @@
 import { BookCallButton } from "@/components/book-call-button";
 import { FaqItem } from "@/components/faq-item";
+import { Mark } from "@/components/mark";
 import { Section } from "@/components/section";
 import { home } from "@/content/home";
 import styles from "./page.module.css";
@@ -9,23 +10,42 @@ import styles from "./page.module.css";
 // key figures, testimonials, people, recent writing, questions, closing.
 // A section with no content renders nothing, heading included. Case studies, key figures,
 // testimonials and recent writing have no content and no layout yet, so they are not built.
+//
+// The hero and the closing sit on brand fields. `data-reveal` and `data-split` mark what
+// the motion script (components/site-motion.tsx) reveals in the browser. They change
+// nothing in this HTML: every word is here and visible whether or not JavaScript runs.
 export default function HomePage() {
   const { hero, firm, clients, whatWeDo, howWeThink, engagement, people, questions, closing } =
     home;
 
   return (
     <>
-      <Section marker="var(--type-label-line)">
-        <p className={styles.eyebrow}>{hero.eyebrow}</p>
-        <h1 className={styles.headline}>{hero.headline}</h1>
-        <p className={styles.lead}>{hero.supportingLine}</p>
-        <div className={styles.action}>
-          <BookCallButton />
+      <Section marker="var(--type-label-line)" field="hero">
+        <div className={styles.hero}>
+          <div className={styles.heroText}>
+            <p className={styles.eyebrow} data-reveal="">
+              {hero.eyebrow}
+            </p>
+            <h1 className={styles.headline} data-split="">
+              {hero.headline}
+            </h1>
+            <p className={styles.lead} data-reveal="">
+              {hero.supportingLine}
+            </p>
+            <div className={styles.action} data-reveal="">
+              <BookCallButton />
+            </div>
+          </div>
+          <div className={styles.heroMark} data-parallax="">
+            <Mark tone="mist" motion="hero" />
+          </div>
         </div>
       </Section>
 
       <Section>
-        <p className={styles.statement}>{firm.statement}</p>
+        <p className={styles.statement} data-reveal="">
+          {firm.statement}
+        </p>
       </Section>
 
       {clients.items.length > 0 ? (
@@ -44,7 +64,7 @@ export default function HomePage() {
       <Section heading={whatWeDo.heading} headingId="what-we-do-heading">
         <ul className={styles.rows}>
           {whatWeDo.items.map((service) => (
-            <li key={service.name} className={styles.row}>
+            <li key={service.name} className={styles.row} data-reveal="">
               <h3 className={styles.rowTitle}>
                 {service.href ? <a href={service.href}>{service.name}</a> : service.name}
               </h3>
@@ -57,7 +77,7 @@ export default function HomePage() {
       <Section heading={howWeThink.heading} headingId="how-we-think-heading">
         <ol className={`${styles.rows} ${styles.numbered}`}>
           {howWeThink.items.map((principle) => (
-            <li key={principle.lead} className={styles.row}>
+            <li key={principle.lead} className={styles.row} data-reveal="">
               <h3 className={styles.rowTitle}>{principle.lead}</h3>
               <p className={styles.rowText}>{principle.text}</p>
             </li>
@@ -69,7 +89,7 @@ export default function HomePage() {
         <Section heading={engagement.heading} headingId="engagement-heading">
           <ol className={`${styles.rows} ${styles.numbered}`}>
             {engagement.steps.map((step) => (
-              <li key={step.title} className={styles.row}>
+              <li key={step.title} className={styles.row} data-reveal="">
                 <h3 className={styles.rowTitle}>{step.title}</h3>
                 <p className={styles.rowText}>{step.text}</p>
               </li>
@@ -80,7 +100,9 @@ export default function HomePage() {
 
       {people.cleared ? (
         <Section>
-          <p className={styles.statement}>{people.line}</p>
+          <p className={styles.statement} data-reveal="">
+            {people.line}
+          </p>
           {people.href ? (
             <p className={styles.peopleLink}>
               <a href={people.href}>{people.linkText}</a>
@@ -99,9 +121,11 @@ export default function HomePage() {
         </div>
       </Section>
 
-      <Section marker="var(--type-h1-line)">
-        <h2 className={styles.closing}>{closing.headline}</h2>
-        <div className={styles.action}>
+      <Section marker="var(--type-h1-line)" field="closing">
+        <h2 className={styles.closing} data-split="">
+          {closing.headline}
+        </h2>
+        <div className={styles.action} data-reveal="">
           <BookCallButton />
         </div>
       </Section>

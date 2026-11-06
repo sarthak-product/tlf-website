@@ -1,6 +1,19 @@
+/*
+ * The lockup is set larger than the 24px default so the mark reads as a mark beside the
+ * name: 28px (the h2 size) on mobile and 40px (the h1 size) from 64rem. Every lockup
+ * proportion is in em, so only this size changes.
+ */
 .header {
+  --lockup-size: var(--type-h2-size);
+
   border-bottom: 1px solid var(--color-border);
   background-color: var(--color-bg);
+}
+
+@media (min-width: 64rem) {
+  .header {
+    --lockup-size: var(--type-h1-size);
+  }
 }
 
 .bar {

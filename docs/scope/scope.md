@@ -15,6 +15,7 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 | 2 | Coding standards and tooling | Slice 1 | in-progress |
 | 3 | Design system and base layout | Slice 1 | in-progress |
 | 4 | Home page on the locked copy | Slice 2 | done |
+| 4b | Home visual and motion | Slice 2 | in-progress |
 | 5 | Demo build for the CA | Slice 3 | planned |
 | 6 | Book a call route | Slice 4 | planned |
 | 7 | Data model | Slice 5 | planned |
@@ -64,6 +65,18 @@ Build all thirteen sections in the order set in `docs/context/03-home-copy.md`, 
 code in apps/web (built from the `/develop` brief, no spec yet; the spec is still owed)
 **Done when:** the page matches the locked copy word for word, hidden sections leave no heading or gap, the six questions each end with Book a call, no invented client, figure, person or image appears, and `node scripts/check-copy.mjs` passes.
 - [ ] Design it (spec): `/architect home page`
+
+### 4b. Home visual and motion · Beta
+The Home page looked bare: the mark read as two letters beside the name, the only colour was the pale page, and nothing moved. This makes the header mark read as a mark, sets the hero and the closing on full width deep blue brand fields with the large mark on the right of the hero, and adds restrained motion with GSAP: the mark's three strokes draw once on load, sections and headings reveal as they enter, the line down the left edge draws with the scroll, the hero mark has a small parallax, and FAQ items ease open and closed. Sarthak authorised the brand field colours, the one hero gradient and the page motion as exceptions to `design/README.md`. (basis: Sarthak's `/develop` brief)
+code in apps/web (built from the `/develop` brief, no spec yet; the spec is still owed)
+**Done when:** the header mark is plainly visible at 1280px and 375px in both themes, every new colour pair passes the contrast check including the lightest end of the hero gradient, the server HTML and the page without JavaScript show every word with nothing hidden, reduced motion shows the final state with no animation, layout shift is zero, the copy is unchanged and `pnpm check` passes.
+- [ ] Design it (spec): `/architect home visual and motion`
+- [x] Build it: `/develop home visual and motion`
+  - [x] Find why the header mark did not read, and fix it
+  - [x] Brand fields for the hero and closing, the large hero mark, the exceptions written into `design.md` and `design/README.md`, and the contrast pairs
+  - [x] Motion: mark draw, section and heading reveals, scrubbed line, hero parallax, FAQ open and close, all off for reduced motion
+- [ ] Verify it: `/check verify home visual and motion`
+- [ ] Test it: `/test home visual and motion`
 
 ## Slice 3: Stop point
 Style: Facade. Tier: Alpha. This is a gate, not a build. Slices 4 onward wait for you to say go.
