@@ -7,7 +7,16 @@ import { extname, join } from "node:path";
 
 const EM = String.fromCharCode(0x2014);
 const EN = String.fromCharCode(0x2013);
-const SKIP = new Set(["node_modules", ".git", ".next", "dist", "build", "coverage", ".claude"]);
+const SKIP = new Set([
+  "node_modules",
+  ".git",
+  ".next",
+  "out",
+  "dist",
+  "build",
+  "coverage",
+  ".claude",
+]);
 const EXT = new Set([
   ".md",
   ".mdx",

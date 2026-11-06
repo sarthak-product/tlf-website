@@ -3,13 +3,17 @@ import type { ReactNode } from "react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteMotion } from "@/components/site-motion";
 import { arimo, quicksand } from "@/lib/fonts";
+import { previewRobots } from "@/lib/preview";
 import "@/styles/tokens.css";
 import "@/styles/base.css";
 
 // Stand-in title. Page titles and meta descriptions are not drafted yet (03-home-copy.md,
 // Meta and footer), so there is no description until Sarthak supplies one.
+// The public preview build adds a noindex, nofollow robots tag to every page. A normal
+// build adds nothing (src/lib/preview.ts).
 export const metadata: Metadata = {
   title: "Lotus Feet Consultancy",
+  robots: previewRobots(),
 };
 
 // Light is the default. Dark follows the visitor's system setting through

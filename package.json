@@ -11,6 +11,7 @@
     "dev": "pnpm --filter web dev",
     "build": "pnpm --filter web build",
     "start": "pnpm --filter web start",
+    "preview:build": "node scripts/preview-build.mjs",
     "typecheck": "pnpm -r typecheck",
     "test": "pnpm -r test",
     "lint": "biome lint .",

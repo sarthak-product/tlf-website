@@ -18,6 +18,7 @@ _These are recommendations to keep your build orderly, not requirements. Skip an
 | 4b | Home visual and motion | Slice 2 | in-progress |
 | 4c | Home redesign: layout and motion | Slice 2 | in-progress |
 | 5 | Demo build for the CA | Slice 3 | planned |
+| 5b | Public preview on GitHub Pages | Slice 3 | in-progress |
 | 6 | Book a call route | Slice 4 | planned |
 | 7 | Data model | Slice 5 | planned |
 | 8 | API service and database connection | Slice 5 | planned |
@@ -100,6 +101,18 @@ A demo ready build of Home plus short demo notes: what is built, which sections 
 - [ ] Verify it: `/check verify demo build`
 - [ ] Write the demo notes: `/document`
 - [ ] Stop here: you demo the CA and decide
+
+### 5b. Public preview on GitHub Pages · Beta
+Sarthak wants a link he can share to the Home page. This adds a preview build switched on by environment variables only (`PREVIEW_EXPORT=1` for a Next.js static export, `PREVIEW_BASE_PATH` for the sub folder, trailing slashes on), so the normal build is unchanged. The preview says noindex on every page and ships a robots.txt that disallows everything until Sarthak says otherwise, plus `.nojekyll`. A GitHub Actions workflow that runs only by hand builds it and deploys it with the official Pages actions. Sarthak authorised merging to main, making the repository public and hosting Home on GitHub Pages for this feature only, after a read only audit of the git history that he decides on. (basis: Sarthak's `/develop` brief)
+code in apps/web/next.config.ts, apps/web/src/lib/preview.ts, scripts/preview-build.mjs and .github/workflows/preview.yml (built from the `/develop` brief, no spec)
+**Done when:** a normal `pnpm build` is unchanged, `pnpm preview:build` puts only the built site in `apps/web/out` (no source maps, docs or env files), every page carries the noindex tag, fonts, the mark, the shapes and the motion work under the base path at 1280px and 375px in both themes, with reduced motion and without JavaScript, the workflow never runs on push, and Sarthak has the live link.
+- [ ] Build it: `/develop public preview on github pages`
+  - [x] Preview build mode, noindex, robots.txt, `.nojekyll` and the output check, looked at under the base path
+  - [x] The hand run Pages workflow with pinned actions
+  - [ ] Audit of the git history, and Sarthak's choice of how to publish
+  - [ ] Merge, public repository, Pages on, first deploy
+- [ ] Verify it: `/check verify public preview on github pages`
+- [ ] Test it: `/test public preview on github pages`
 
 ## Slice 4: Book a call
 Style: Tracer Bullet. Tier: Beta.

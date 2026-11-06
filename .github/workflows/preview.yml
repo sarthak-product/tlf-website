@@ -1,0 +1,75 @@
+# Public preview of the site on GitHub Pages (scope feature 5b).
+# Runs only when someone starts it by hand (Actions tab, "Run workflow"). Never on push.
+# It builds the static preview with `pnpm preview:build` and deploys apps/web/out.
+# The preview carries noindex on every page and a robots.txt that disallows everything.
+# Every action is pinned to a full commit hash, with its version in the comment.
+# No secrets are used or printed. CALENDLY_URL is not set here, so Book a call links to "#".
+name: Preview on GitHub Pages
+
+on:
+  workflow_dispatch:
+
+permissions: {}
+
+# One deployment at a time. A new run waits instead of cancelling one in flight.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - name: Check out
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      # Reads the pnpm version from packageManager in package.json (10.28.0).
+      - name: Set up pnpm
+        uses: pnpm/action-setup@73e46992e05b19abd31f2f3c20e0e7370d762115 # v6.1.1
+
+      # Reads the Node.js version from .nvmrc (26).
+      - name: Set up Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      # Gives the base path Pages serves this repo from, for example /tlf-website.
+      - name: Read the Pages settings
+        id: pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      - name: Build the preview
+        run: pnpm preview:build
+        env:
+          PREVIEW_BASE_PATH: ${{ steps.pages.outputs.base_path }}
+
+      # include-hidden-files keeps .nojekyll. The build script has already checked that it is
+      # the only hidden file in the output.
+      - name: Upload the site
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: apps/web/out
+          include-hidden-files: true
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
