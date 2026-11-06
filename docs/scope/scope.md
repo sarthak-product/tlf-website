@@ -109,7 +109,7 @@ code in apps/web/next.config.ts, apps/web/src/lib/preview.ts, scripts/preview-bu
 - [ ] Build it: `/develop public preview on github pages`
   - [x] Preview build mode, noindex, robots.txt, `.nojekyll` and the output check, looked at under the base path
   - [x] The hand run Pages workflow with pinned actions
-  - [ ] Audit of the git history, and Sarthak's choice of how to publish
+  - [x] Audit of the git history, and Sarthak's choice of how to publish (option 1: public with history, chosen 6 Nov 2026)
   - [ ] Merge, public repository, Pages on, first deploy
 - [ ] Verify it: `/check verify public preview on github pages`
 - [ ] Test it: `/test public preview on github pages`
